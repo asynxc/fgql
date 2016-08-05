@@ -34,7 +34,7 @@ fgql expose three classes. `DefaultNetwokLayer` , `EndPoint` and `QueryObject`
 
 ### `DefaultNetwokLayer`
 
-Network layer is what's get called to perform query and handle network operations such timeout, retries...
+Network layer is what's called to perform query and handle network operations such timeout, retries...
 
 ```js
 import {DefaultNetwokLayer} from 'fgql'
