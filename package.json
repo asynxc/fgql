@@ -1,7 +1,7 @@
 {
   "name": "@hamavb/fgql",
   "version": "1.0.0",
-  "description": "Produce universal library with webpack and es6",
+  "description": "A Fetch library that take care of interfacing with GraphQl server.",
   "main": "src/index.js",
   "scripts": {
     "clean": "rimraf lib && mkdir lib",
@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/hamavb/fgql.git"
   },
   "keywords": [
     "graphql",
