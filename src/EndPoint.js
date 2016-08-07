@@ -28,7 +28,7 @@ export default class EndPoint {
 		this.pre = this.pre.bind(this)
 		this.post = this.post.bind(this)
 		this.fetch = this.fetch.bind(this)
-		this.proccesFetch = this.proccesFetch.bind(this)
+		this._processFetch = this._processFetch.bind(this)
 	}
 
 	pre (...mdl) {
@@ -45,9 +45,9 @@ export default class EndPoint {
 		return new Promise((resolve, reject) => {
 			let tmp = [].concat(
 				this._preMdls,
-				(headers) => next => this.proccesFetch(query, headers)(next),
+				(headers) => next => this._processFetch(query, headers)(next),
 				this._postMdls,
-				(responce, err) => _ => err ? reject(err) : resolve(responce)
+				(response, err) => _ => err ? reject(err) : resolve(response)
 			)
 
 			tmp.reverse().forEach((mdl) => {
@@ -60,12 +60,13 @@ export default class EndPoint {
 		})
 	}
 
-	proccesFetch (query, headers) {
+	_processFetch (query, headers) {
 		return next => {
 			const _net = new this._net(this._uri, {...this._options})
 			_net.performQuery(query, headers).then(
-				(responce) => next(responce, void 0, {...this.context}, () => this.fetch(query))
-			).catch((err) => next(void 0, err, {...this.context}, () => this.fetch(query)))
+				(response) => next(response, void 0, {...this.context}, () => this.fetch(query))
+			).catch(
+				(err) => next(void 0, err, {...this.context}, () => this.fetch(query)))
 		}
 	}
 }

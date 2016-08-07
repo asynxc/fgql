@@ -61,9 +61,9 @@ export default class DefaultNetworkLayer {
 				}, this._timeout(_attempt + 1))
 
 				res.then(
-					(responce) => {
+					(response) => {
 						clearTimeout(timer)
-						_attempt === this._attempt && responce.json()
+						_attempt === this._attempt && response.json()
 							.then((data) => data && data.errors ? reject(data.errors) : resolve(data.data))
 							.catch((err) => reject(err))
 					}

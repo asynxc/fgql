@@ -2,8 +2,8 @@ import EndPoint from 'EndPoint'
 var invariant = require('invariant')
 
 const init = {
-	proccesVars: () => {},
-	proccesResult: (data) => data,
+	processVars: () => {},
+	processResult: (data) => data,
 	defaultVars: () => {},
 	autoFetch: false,
 	fetchInterval: 0,
@@ -13,8 +13,8 @@ const init = {
 export default class QueryObject {
 	constructor (initObj = init, mapDataToProps = () => {}) {
 		let {
-			query, defaultVars = init.defaultVars, proccesVars = init.proccesVars,
-			proccesResult = init.proccesResult, endPoint = init.endPoint, autoFetch = init.autoFetch,
+			query, defaultVars = init.defaultVars, processVars = init.processVars,
+			processResult = init.processResult, endPoint = init.endPoint, autoFetch = init.autoFetch,
 			fetchInterval = init.fetchInterval
 		} = initObj
 
@@ -24,11 +24,11 @@ export default class QueryObject {
 		invariant(typeof defaultVars === OBJECT || typeof defaultVars === FUNCTION,
 		`expected "defaultVars" parameter type to be function or object, instead got ${typeof defaultVars}`)
 
-		invariant(typeof proccesVars === FUNCTION,
-		`expected "proccesVars" parameter type to be function, instead got ${typeof proccesVars}`)
+		invariant(typeof processVars === FUNCTION,
+		`expected "processVars" parameter type to be function, instead got ${typeof processVars}`)
 
-		invariant(typeof proccesResult === FUNCTION,
-		`expected "proccesResult" parameter type to be function, instead got ${typeof proccesResult}`)
+		invariant(typeof processResult === FUNCTION,
+		`expected "processResult" parameter type to be function, instead got ${typeof processResult}`)
 
 		invariant(typeof autoFetch === FUNCTION || typeof autoFetch === BOOLEAN,
 		`expected "autoFetch" parameter type to be function or boolean, instead got ${typeof autoFetch}`)
@@ -47,8 +47,8 @@ export default class QueryObject {
 		this._defaultVars = defaultVars === void 0
 							? init.defaultVars
 							: (typeof defaultVars === FUNCTION ? defaultVars() : defaultVars)
-		this._proccesVars = proccesVars
-		this._proccesResult = proccesResult
+		this._processVars = processVars
+		this._processResult = processResult
 		this._mapDataToProps = mapDataToProps
 		this._autoFetch = autoFetch
 		this._fetchInterval = fetchInterval
@@ -73,7 +73,7 @@ export default class QueryObject {
 	resolveQuery (iVars) {
 		// if "query" type is a function, procces variables
 		return (typeof this._query === FUNCTION
-		? this._query({...this._defaultVars, ...iVars, ...this._proccesVars(iVars, this._defaultVars)})
+		? this._query({...this._defaultVars, ...iVars, ...this._processVars(iVars, this._defaultVars)})
 		: this._query).replace(/\s*([{|}])\s*/g, '$1')
 	}
 
@@ -95,7 +95,7 @@ export default class QueryObject {
 			this._setState(void 0, void 0, true)
 			this._endPoint.fetch(_query).then(
 				(data) => {
-					this._setState({...data, ...this._proccesResult({...data})}, void 0)
+					this._setState({...data, ...this._processResult({...data})}, void 0)
 					resolve(data)
 				}
 			).catch(

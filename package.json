@@ -1,8 +1,8 @@
 {
   "name": "@hamavb/fgql",
   "version": "1.0.0",
-  "description": "A Fetch library that take care of interfacing with GraphQl server.",
-  "main": "src/index.js",
+  "description": "A Fetch library that takes care of interfacing with GraphQl endpoint.",
+  "main": "lib/fgql.js",
   "scripts": {
     "clean": "rimraf lib && mkdir lib",
     "build": "npm run clean && webpack --mode=build",
