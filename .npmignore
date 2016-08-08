@@ -1,7 +1,5 @@
-# Logs
 logs
 *.log
 node_modules
 examples
-lib
 .vscode
