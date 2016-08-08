@@ -1,5 +1,5 @@
 {
-  "name": "@hamavb/fgql",
+  "name": "fgql",
   "version": "1.0.0",
   "description": "A Fetch library that takes care of interfacing with GraphQl endpoint.",
   "main": "lib/fgql.js",
