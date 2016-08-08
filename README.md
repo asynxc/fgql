@@ -44,8 +44,8 @@ fgql expose three classes. `DefaultNetwokLayer` , `EndPoint` and `QueryObject`. 
 
 Network layer is what's called to perform query and handle network operations such timeout, retries...
 fgql comes with a default network layer that is able to :
-	-  timeout after performing a HTTP request without response within predefined timeout in ms..
-	-  attempt a N retry delayed by predefined wait time in ms.
+	*  timeout after performing a HTTP request without response within predefined timeout in ms..
+	*  attempt a N retry delayed by predefined wait time in ms.
 
 Parameters Table :
 
@@ -119,12 +119,12 @@ var endPoint= new EndPoint({
 Properties Table :
 
 | Property     		| Type 																									|
-| :----------- 		| :---------------------------------------------------------------------------------------------------: |
+| :----------- 		| :---------------------------------------------------------------------------------------------------	|
 | fetch				| function(query: string): Promise																		|
 | pre				| function(mdl: function(header: plainObject, context: plainObject)): EndPoint							|
 | post				| function(mdl: function(responce: any, err: any, refetch; function(), context: plainObject)): EndPoint	|
 
-`EndPoint` provide a pre and post middleware functionality which allow to subscribe to before and after hooks of fetch operations.
+`EndPoint` provide a pre and post middleware functionality which allow to subscribe to **before** and **after** hooks of fetch operations.
 
 ```js
 import {EndPoint} from 'fgql'
@@ -194,17 +194,22 @@ var UserQO = QueryObject({
 // ..
 ```
 
-`defaultVars` can be either a plainObject or function that return a plainObject.
-
-`processVars` is a function that allow you to 
-
 if `query` type is a string, processsing variables is ignored.
 otherwise the result of `defaultVars`, `inVars` and `processVars` are respectively merged into a final variable object. then passed to `query` function for resolving.
 
-`processResult` allow to process fetch result and calculate a new data. 
+`defaultVars` can be either a plainObject or function that return a plainObject.
+if *react-fgql* is used and `defaultVars` is a function. it gets invoked with ownerProps as argument.
+
+`processVars` is a function get executed lastely of variables construction chain. which allow to override or generate new variables.
+
+`processResult` is a function that gets invoked with post middlewares result data as argument.
+which is a query object specific.
 
 `fetchInterval` define delay time between each fetch operation.
-if `fetchInterval` value is above `0` and ^[react-fgql] is used, the auto fetch mode starts immidiatlly every `fetchInterval` ms when component is mounted.
+if *react-fgql* is used, the auto fetch mode starts immidiatlly every X ms when component is mounted.
+
+> fetch operations are sequentially fired.
+> No fetch operation is fired if the first is running.
 
 Properties Table :
 
@@ -273,6 +278,7 @@ UserQO.autoFetch(inVars, 5000)(
 )
 
 ```
+
 To stop auto fetching, you can either call `stopAutoFetch` method or return explicitly `false` from one of callback functions of `autoFetch` method
 
 
