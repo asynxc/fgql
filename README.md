@@ -256,7 +256,7 @@ UserQO.isFetching()
 // return errors if any present (error are initialized in each fetch attempt)
 UserQO.Error()
 
-// return unprocessed data if any present
+// return processed data if any present
 UserQO.Data()
 
 // clear errors
