@@ -11,6 +11,16 @@ var plugins = []
 if (env === 'build') {
 	plugins.push(new UglifyJsPlugin({ minimize: true }))
 	outputFile = libraryName + '.min.js'
+} else {
+	plugins.push(new Copy([{
+		from: `./lib/${outputFile}`,
+		to: `../examples/node_modules/${libraryName}/index.js`
+	}]))
+
+	plugins.push(new Copy([{
+		from: `./lib/${outputFile}`,
+		to: `../../react-fgql/examples/node_modules/${libraryName}/index.js`
+	}]))
 }
 
 plugins.push(new webpack.DefinePlugin({

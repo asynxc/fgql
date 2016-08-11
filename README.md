@@ -282,8 +282,9 @@ UserQO.autoFetch(inVars, 5000)(
 To stop auto fetching, you can either call `stopAutoFetch` method or return explicitly `false` from one of callback functions of `autoFetch` method
 
 
-## Features plan 
+## Features development
 
+...
 
 ## Test
 
